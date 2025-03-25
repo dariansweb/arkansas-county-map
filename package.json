@@ -1,13 +1,15 @@
 {
   "name": "arkansas-county-map",
   "version": "1.0.0",
-  "lockfileVersion": 3,
-  "requires": true,
-  "packages": {
-    "": {
-      "name": "arkansas-county-map",
-      "version": "1.0.0",
-      "license": "MIT"
-    }
+  "description": "Arkansas county mapping project",
+  "main": "index.js",
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "dependencies": {
+    
+  },
+  "devDependencies": {
+    
   }
 }
