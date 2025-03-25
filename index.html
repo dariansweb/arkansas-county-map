@@ -116,62 +116,45 @@
         Yell: 38,
       };
 
-
       const svg = d3.select("svg");
       const tooltip = d3.select("#tooltip");
       const width = +svg.attr("width");
       const height = +svg.attr("height");
-      
-      // Modified color scale to use more distinct ranges
-      const color = d3.scaleQuantize()
-        .domain([0, 100])
-        .range(d3.schemeReds[9]);
-      
-      d3.json("https://raw.githubusercontent.com/dariansweb/arkansas-county-map/main/data/arkansas-counties-fixed-geojson.json")
-        .then((geojson) => {
-          console.log("GeoJSON data:", geojson); // Debug log
-      
-          // Move projection setup inside where geojson is available
-          const projection = d3
-            .geoAlbers()
-            .fitSize([width, height], geojson);  // Now geojson is defined
-      
-          const path = d3.geoPath().projection(projection);
-      
-          svg.selectAll("path")
-            .data(geojson.features)
-            .join("path")
-            .attr("class", "county")
-            .attr("d", path)
-            .attr("fill", (d) => {
-              const name = d.properties.COUNTY;
-              console.log("County name:", name);
-              const value = countyData[name] || 0;
-              console.log("Value:", value);
-              return color(value);
-            })
-            .on("mousemove", function(event, d) {
-              const name = d.properties.COUNTY;
-              const value = countyData[name] || 0;
-              tooltip
-                .style("left", event.pageX + 10 + "px")
-                .style("top", event.pageY - 20 + "px")
-                .style("opacity", 1)
-                .html(`<strong>${name}</strong><br/>Value: ${value}`);
-            })
-            .on("mouseout", () => tooltip.style("opacity", 0));
-        })
-        .catch((err) => {
-          console.error("GeoJSON load error:", err);
-          svg
-            .append("text")
-            .attr("x", width / 2)
-            .attr("y", height / 2)
-            .attr("text-anchor", "middle")
-            .style("fill", "red")
-            .text("Failed to load map");
-        });
-      
+
+      const color = d3.scaleQuantize().domain([0, 100]).range(d3.schemeReds[9]);
+      d3.json(
+        "https://raw.githubusercontent.com/dariansweb/arkansas-county-map/main/data/arkansas-counties-fixed-geojson.json"
+      ).then((geojson) => {
+        const projection = d3
+          .geoMercator()
+          .center([-92.5, 34.8]) // center over Arkansas
+          .scale(5000) // adjust zoom manually
+          .translate([width / 2, height / 2]);
+
+        const path = d3.geoPath().projection(projection);
+
+        svg
+          .selectAll("path")
+          .data(geojson.features)
+          .join("path")
+          .attr("class", "county")
+          .attr("d", path)
+          .attr("fill", (d) => {
+            const name = d.properties.COUNTY;
+            const value = countyData[name] || 0;
+            return color(value);
+          })
+          .on("mousemove", (event, d) => {
+            const name = d.properties.COUNTY;
+            const value = countyData[name] || 0;
+            tooltip
+              .style("left", event.pageX + 10 + "px")
+              .style("top", event.pageY - 20 + "px")
+              .style("opacity", 1)
+              .html(`<strong>${name}</strong><br/>Value: ${value}`);
+          })
+          .on("mouseout", () => tooltip.style("opacity", 0));
+      });
     </script>
   </body>
 </html>
