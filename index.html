@@ -1,11 +1,177 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Hello, Gitter.</h1>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <title>Arkansas Heat Map</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+      body {
+        margin: 0;
+        font-family: sans-serif;
+        background: #f9f9f9;
+      }
+      svg {
+        display: block;
+        margin: auto;
+        background: #fff;
+        border: 1px solid #ccc;
+      }
+      .county {
+        stroke: #fff;
+        stroke-width: 0.5px;
+      }
+      .tooltip {
+        position: absolute;
+        background: rgba(0, 0, 0, 0.75);
+        color: white;
+        padding: 6px 10px;
+        border-radius: 4px;
+        font-size: 13px;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.2s ease;
+      }
+    </style>
+  </head>
+  <body>
+    <svg width="960" height="600"></svg>
+    <div class="tooltip" id="tooltip"></div>
+
+    <script>
+      countyData = {
+        Arkansas: 34,
+        Ashley: 71,
+        Baxter: 67,
+        Benton: 73,
+        Boone: 59,
+        Bradley: 45,
+        Calhoun: 24,
+        Carroll: 61,
+        Chicot: 48,
+        Clark: 42,
+        Clay: 53,
+        Cleburne: 65,
+        Cleveland: 39,
+        Columbia: 52,
+        Conway: 40,
+        Craighead: 61,
+        Crawford: 38,
+        Crittenden: 70,
+        Cross: 44,
+        Dallas: 30,
+        Desha: 26,
+        Drew: 33,
+        Faulkner: 55,
+        Franklin: 41,
+        Fulton: 58,
+        Garland: 39,
+        Grant: 62,
+        Greene: 46,
+        Hempstead: 35,
+        "Hot Spring": 47,
+        Howard: 63,
+        Independence: 57,
+        Izard: 29,
+        Jackson: 36,
+        Jefferson: 23,
+        Johnson: 31,
+        Lafayette: 19,
+        Lawrence: 60,
+        Lee: 28,
+        Lincoln: 50,
+        "Little River": 43,
+        Logan: 32,
+        Lonoke: 68,
+        Madison: 51,
+        Marion: 56,
+        Miller: 66,
+        Mississippi: 49,
+        Monroe: 25,
+        Montgomery: 37,
+        Nevada: 27,
+        Newton: 20,
+        Ouachita: 64,
+        Perry: 17,
+        Phillips: 22,
+        Pike: 54,
+        Poinsett: 33,
+        Polk: 31,
+        Pope: 41,
+        Prairie: 30,
+        Pulaski: 88,
+        Randolph: 40,
+        "St. Francis": 36,
+        Saline: 47,
+        Scott: 55,
+        Searcy: 21,
+        Sebastian: 42,
+        Sevier: 53,
+        Sharp: 46,
+        Stone: 30,
+        Union: 59,
+        "Van Buren": 43,
+        Washington: 65,
+        White: 58,
+        Woodruff: 15,
+        Yell: 38,
+      };
+
+
+      const svg = d3.select("svg");
+      const tooltip = d3.select("#tooltip");
+      const width = +svg.attr("width");
+      const height = +svg.attr("height");
+      
+      // Modified color scale to use more distinct ranges
+      const color = d3.scaleQuantize()
+        .domain([0, 100])
+        .range(d3.schemeReds[9]);
+      
+      d3.json("https://raw.githubusercontent.com/dariansweb/arkansas-county-map/main/data/arkansas-counties-fixed-geojson.json")
+        .then((geojson) => {
+          console.log("GeoJSON data:", geojson); // Debug log
+      
+          // Move projection setup inside where geojson is available
+          const projection = d3
+            .geoAlbers()
+            .fitSize([width, height], geojson);  // Now geojson is defined
+      
+          const path = d3.geoPath().projection(projection);
+      
+          svg.selectAll("path")
+            .data(geojson.features)
+            .join("path")
+            .attr("class", "county")
+            .attr("d", path)
+            .attr("fill", (d) => {
+              const name = d.properties.COUNTY;
+              console.log("County name:", name);
+              const value = countyData[name] || 0;
+              console.log("Value:", value);
+              return color(value);
+            })
+            .on("mousemove", function(event, d) {
+              const name = d.properties.COUNTY;
+              const value = countyData[name] || 0;
+              tooltip
+                .style("left", event.pageX + 10 + "px")
+                .style("top", event.pageY - 20 + "px")
+                .style("opacity", 1)
+                .html(`<strong>${name}</strong><br/>Value: ${value}`);
+            })
+            .on("mouseout", () => tooltip.style("opacity", 0));
+        })
+        .catch((err) => {
+          console.error("GeoJSON load error:", err);
+          svg
+            .append("text")
+            .attr("x", width / 2)
+            .attr("y", height / 2)
+            .attr("text-anchor", "middle")
+            .style("fill", "red")
+            .text("Failed to load map");
+        });
+      
+    </script>
+  </body>
 </html>
