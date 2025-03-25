@@ -1,10 +1,9 @@
 {
-    "name": "arkansas-county-map",
-    "version": "1.0.0",
-    "type": "module",
-    "scripts": {
-      "build": "cp -r pages dist"
-    },
-    "license": "MIT"
-  }
-  
+  "name": "arkansas-county-map",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "build": "mkdir -p dist && cp -r pages/* dist/"
+  },
+  "license": "MIT"
+}
