@@ -35,15 +35,92 @@
         font-size: 14px;
         display: none;
       }
+      .district-btn.selected {
+        background: #555;
+        color: #fff;
+        border: 2px solid #000;
+      }
+      .faded {
+        stroke: #987 !important;
+        opacity: 0.4;
+      }
     </style>
   </head>
   <body>
     <div class="tooltip" id="tooltip"></div>
+    <div
+      id="stats-bar"
+      style="
+        padding: 10px 20px;
+        font-weight: bold;
+        font-size: 14px;
+        background: #f1f1f1;
+        border-bottom: 1px solid #ccc;
+      "
+    >
+      Show: All Districts | Total Commits: — | Per 1k Youth: —
+    </div>
+
     <div class="info-box" id="info-box"></div>
     <div id="svg-container"></div>
 
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script type="module">
+      function updateStatsBar(district) {
+        const statsBar = document.getElementById("stats-bar");
+
+        if (!district) {
+          statsBar.innerHTML = `Show: All Districts | Total Commits: — | Per 1k Youth: —`;
+          return;
+        }
+
+        const filtered = Object.values(countyData).filter(
+          (d) => d.district === district
+        );
+
+        const totalYouth = filtered.reduce(
+          (sum, d) => sum + d.age10_14.total + d.age15_19.total,
+          0
+        );
+
+        const totalCommits = filtered.reduce(
+          (sum, d) => sum + Object.values(d.Commits).reduce((a, b) => a + b, 0),
+          0
+        );
+
+        const per1k = totalYouth > 0 ? (totalCommits / totalYouth) * 1000 : 0;
+
+        statsBar.innerHTML = `Show: District ${district} | Total Commits: ${totalCommits} | Per 1k Youth: ${per1k.toFixed(
+          2
+        )}`;
+      }
+
+      function highlightDistrict(selectedDistrict) {
+        Object.entries(countyData).forEach(([county, data]) => {
+          const el = d3.select(`#${CSS.escape(county)}`);
+          const youth = data.age10_14.total + data.age15_19.total;
+          const commits = Object.values(data.Commits).reduce(
+            (a, b) => a + b,
+            0
+          );
+          const rate = youth > 0 ? commits / youth : 0;
+
+          if (selectedDistrict === null || data.district === selectedDistrict) {
+            el.attr("fill", color(rate))
+              .classed("faded", false) // REMOVE faded
+              .style("opacity", 1.9);
+          } else {
+            el.classed("faded", true); // ADD faded to others
+          }
+        });
+
+        tooltip.style("opacity", 0);
+        infoBox.style("display", "none");
+        tooltip.style("opacity", 0);
+        infoBox.style("display", "none");
+        updateStatsBar(selectedDistrict);
+      }
+
       import { countyData } from "./data/countyData-13.js";
 
       // 🔥 Now you can use countyData as usual
@@ -120,6 +197,40 @@
           });
 
           console.log("✅ Map rendered with interactive county data");
+
+          // Now that the SVG is in place, add the district buttons
+          const uniqueDistricts = Array.from(
+            new Set(Object.values(countyData).map((d) => d.district))
+          ).sort((b, a) => {
+            const numA = parseInt(a);
+            const numB = parseInt(b);
+
+            if (numA !== numB) return numA - numB;
+
+            const suffixA = a.replace(numA, "");
+            const suffixB = b.replace(numB, "");
+
+            return suffixA.localeCompare(suffixB);
+          });
+
+          uniqueDistricts.forEach((district) => {
+            const btn = document.createElement("button");
+            btn.classList.add("district-btn");
+            btn.textContent = district;
+            btn.addEventListener("click", () => highlightDistrict(district));
+            document.body.prepend(btn);
+          });
+
+          // Add Show All button last
+          const resetBtn = document.createElement("button");
+          resetBtn.textContent = "Show All";
+          resetBtn.classList.add("district-btn");
+          resetBtn.addEventListener("click", () => {
+            highlightDistrict(null);
+            updateStatsBar(null);
+          });
+
+          document.body.prepend(resetBtn);
         });
     </script>
   </body>

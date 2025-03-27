@@ -1,7 +1,7 @@
 export const countyData = { 
   "Cleveland": {
     "pop": 7550,
-    "district": "1234",
+    "district": "13",    
     "age10_14": {
       "total": 546,
       "male": 276,
@@ -22,6 +22,7 @@ export const countyData = {
   },
   "Calhoun": {
     "pop": 4740,
+    "district": "13",    
     "age10_14": {
       "total": 279,
       "male": 135,
@@ -42,6 +43,7 @@ export const countyData = {
   },
   "Dallas": {
     "pop": 6481,
+    "district": "13",    
     "age10_14": {
       "total": 412,
       "male": 221,
@@ -62,6 +64,7 @@ export const countyData = {
   },
   "Ouachita": {
     "pop": 22647,
+    "district": "13",    
     "age10_14": {
       "total": 1561,
       "male": 789,
@@ -82,6 +85,7 @@ export const countyData = {
   },
   "Union": {
     "pop": 39050,
+    "district": "13",    
     "age10_14": {
       "total": 2782,
       "male": 1447,
@@ -102,6 +106,7 @@ export const countyData = {
   },
   "Columbia": {
     "pop": 22800,
+    "district": "13",    
     "age10_14": {
       "total": 1359,
       "male": 682,
@@ -838,6 +843,7 @@ export const countyData = {
   },
   "Franklin": {
     "pop": 17103,
+    "district": "5",
     "age10_14": {
       "total": 1195,
       "male": 623,
