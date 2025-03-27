@@ -40,6 +40,15 @@ This page features files containing county population totals and components of c
 
 ---
 
+### Juvenile Commitment Data
+
+The counts of juvenile commitments were obtained from the Arkansas Department of Human Services, Division of Youth Services. These reports provide detailed statistical data on youth services and commitments within the state.
+
+> **Division of Youth Services Reports & Publications**  
+> [https://humanservices.arkansas.gov/divisions-shared-services/youth-services/reports-publications/](https://humanservices.arkansas.gov/divisions-shared-services/youth-services/reports-publications/)
+
+---
+
 ## 🎯 Use Cases
 
 This data is ideal for:
