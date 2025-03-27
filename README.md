@@ -1,11 +1,20 @@
+---
+
 # Arkansas County Boundary GeoJSON
 
 This repository contains a simplified **GeoJSON** representation of all **75 county boundaries in the state of Arkansas**, derived from official shapefile data provided by the [Arkansas GIS Office](https://gis.arkansas.gov).
+
+> **🔗 Live Demo:**  
+> 👉 [Juvenile Justice Dashboard (Hosted on GitHub Pages)](https://dariansweb.github.io/arkansas-county-map)
+
+---
 
 ## 📦 File Contents
 
 - `COUNTY_BOUNDARY.json`  
   A GeoJSON file containing all county polygons for Arkansas, usable in web mapping libraries such as **D3.js**, **Leaflet**, **Mapbox GL JS**, or any modern GIS platform that supports GeoJSON.
+
+---
 
 ## 🧭 Data Sources
 
@@ -16,16 +25,20 @@ The county boundaries were sourced from the Arkansas GIS Office:
 > **County Boundary (Polygons)**  
 > [https://gis.arkansas.gov/product/county-boundary-polygons/](https://gis.arkansas.gov/product/county-boundary-polygons/)
 
-This dataset represents the contemporary boundary of each county as established or altered by various Acts of the Arkansas Legislature. :contentReference[oaicite:0]{index=0}
+This dataset represents the contemporary boundary of each county as established or altered by various Acts of the Arkansas Legislature.
+
+---
 
 ### Population Data
 
 Population estimates for each county were obtained from the U.S. Census Bureau:
 
-> **County Population Totals: 2020-2024**  
+> **County Population Totals: 2020–2024**  
 > [https://www.census.gov/data/tables/time-series/demo/popest/2020s-counties-total.html](https://www.census.gov/data/tables/time-series/demo/popest/2020s-counties-total.html)
 
-This page features files containing county population totals and components of change for years 2020 to 2024. :contentReference[oaicite:1]{index=1}
+This page features files containing county population totals and components of change for years 2020 through 2024.
+
+---
 
 ## 🎯 Use Cases
 
@@ -36,7 +49,40 @@ This data is ideal for:
 - Mapping **case management**, **service coverage**, or **demographic data**
 - Educational projects and public visualizations
 
+---
+
 ## 🌐 Example (with D3.js)
 
 ```js
 // Example code to load and visualize the GeoJSON data with D3.js
+d3.json("COUNTY_BOUNDARY.json").then((data) => {
+  const projection = d3.geoAlbersUsa().fitSize([width, height], data);
+  const path = d3.geoPath().projection(projection);
+
+  svg.selectAll("path")
+    .data(data.features)
+    .enter()
+    .append("path")
+    .attr("d", path)
+    .attr("fill", "#ccc");
+});
+```
+
+---
+
+## 📝 License
+
+This project is licensed under the MIT License. That means you’re free to use, modify, distribute, and remix this project—even commercially—just include the original copyright notice.
+
+> **MIT License**  
+> Copyright © 2025 [Darian Sims](https://github.com/dariansweb)
+
+See the full license text in [`LICENSE.txt`](LICENSE.txt).
+
+---
+
+## 🤝 Contributions
+
+Feel free to fork, open issues, or suggest improvements! Whether you're fixing typos or building entire dashboards on top of this—pull requests are welcome.
+
+---
