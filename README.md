@@ -7,14 +7,27 @@ This repository contains a simplified **GeoJSON** representation of all **75 cou
 - `COUNTY_BOUNDARY.json`  
   A GeoJSON file containing all county polygons for Arkansas, usable in web mapping libraries such as **D3.js**, **Leaflet**, **Mapbox GL JS**, or any modern GIS platform that supports GeoJSON.
 
-## 🧭 Data Source
+## 🧭 Data Sources
 
-This file was converted from the official shapefile published by the Arkansas GIS Office:
+### County Boundaries
+
+The county boundaries were sourced from the Arkansas GIS Office:
 
 > **County Boundary (Polygons)**  
-> https://gis.arkansas.gov/product/county-boundary-polygons/
+> [https://gis.arkansas.gov/product/county-boundary-polygons/](https://gis.arkansas.gov/product/county-boundary-polygons/)
 
-## 🎯 Use Case
+This dataset represents the contemporary boundary of each county as established or altered by various Acts of the Arkansas Legislature. :contentReference[oaicite:0]{index=0}
+
+### Population Data
+
+Population estimates for each county were obtained from the U.S. Census Bureau:
+
+> **County Population Totals: 2020-2024**  
+> [https://www.census.gov/data/tables/time-series/demo/popest/2020s-counties-total.html](https://www.census.gov/data/tables/time-series/demo/popest/2020s-counties-total.html)
+
+This page features files containing county population totals and components of change for years 2020 to 2024. :contentReference[oaicite:1]{index=1}
+
+## 🎯 Use Cases
 
 This data is ideal for:
 
@@ -26,3 +39,4 @@ This data is ideal for:
 ## 🌐 Example (with D3.js)
 
 ```js
+// Example code to load and visualize the GeoJSON data with D3.js

@@ -1,4 +1,4 @@
-export const countyData = {
+export const countyData = { 
   "Hempstead": {
     "pop": 20069,
     "age10_14": {
