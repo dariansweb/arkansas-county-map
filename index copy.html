@@ -10,32 +10,12 @@
         font-family: sans-serif;
       }
       svg {
-        width: 100%;
-        height: auto;
-        max-width: 100%;
-        max-height: 100%;
+        display: block;
+        margin: auto;
+        width: 100vw;
+        height: 100vh;
         transition: all 0.4s ease-in-out;
       }
-      .app-header {
-        background: linear-gradient(135deg, #1e3c72, #2a5298);
-        color: white;
-        text-align: center;
-        padding: 20px 10px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-        position: sticky;
-        top: 0;
-        z-index: 1001;
-      }
-
-      .app-header h1 {
-        font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        font-size: 26px;
-        margin: 0;
-        font-weight: 600;
-        letter-spacing: 0.5px;
-        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
-      }
-
       .district-btn {
         background-color: #e0e0e0;
         color: #333;
@@ -48,10 +28,12 @@
         cursor: pointer;
         transition: all 0.2s ease;
       }
+
       .district-btn:hover {
         background-color: #c9c9c9;
         box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
       }
+
       .district-btn.selected {
         background-color: #333;
         color: #fff;
@@ -64,9 +46,11 @@
         font-weight: bold;
         border: none;
       }
+
       .district-btn.reset:hover {
         background: #125ea8;
       }
+
       .tooltip {
         position: absolute;
         background: rgba(0, 0, 0, 0.85);
@@ -95,16 +79,19 @@
         top: 0;
         z-index: 1000;
       }
+
       #stats-bar {
         font-size: 16px;
         font-weight: bold;
         margin-bottom: 8px;
       }
+
       #district-buttons {
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
       }
+
       .info-box {
         max-width: 500px;
         margin: 10px auto;
@@ -123,120 +110,23 @@
         opacity: 0.25;
         transition: opacity 0.3s;
       }
-      .top-bar {
-        background: #fff;
-        padding: 10px 20px;
-        border-bottom: 1px solid #ccc;
-        font-size: 16px;
-        font-weight: bold;
-        text-align: center;
-      }
-      .main-layout {
-        display: flex;
-        height: calc(100vh - 50px); /* or however tall your top bar is */
-        overflow: hidden;
-      }
-      .left-panel {
-        width: 120px;
-        background: #f0f0f0;
-        padding: 10px;
-        display: flex;
-        flex-direction: column;
-        flex-shrink: 0; /* 👈 Don’t allow shrinking */
-        flex-grow: 0; /* 👈 Don’t allow growing */
-        height: 100%;
-        overflow-y: auto;
-        overflow-x: hidden;
-        border-right: 1px solid #ccc;
-        height: 100%;
-        box-sizing: border-box;
-      }
-      #district-buttons {
-        display: flex;
-        flex-direction: column;
-        align-items: stretch;
-        justify-content: flex-start;
-        gap: 6px; /* space between buttons */
-      }
-
-      .left-panel button {
-        margin: 4px 0;
-        padding: 8px;
-        border: none;
-        border-radius: 6px;
-        background: #eee;
-        cursor: pointer;
-        font-size: 13px;
-        transition: all 0.2s ease;
-      }
-      .left-panel button:hover {
-        background: #ddd;
-      }
-      .left-panel .selected {
-        background: #444;
-        color: #fff;
-      }
-      .map-container {
-        flex: 1;
-        display: flex;
-        flex-grow: 1; /* 👈 Allow expansion */
-        align-items: flex-start; /* 👈 aligns content to top */
-        justify-content: center;
-        padding: 10px;
-        overflow: hidden;
-      }
-
-      .right-panel {
-        width: 300px;
-        background: #fafafa;
-        padding: 15px;
-        overflow-y: auto;
-        border-left: 1px solid #ccc;
-      }
-
-      @media (max-width: 768px) {
-        .main-layout {
-          flex-direction: column;
-        }
-
-        .left-panel,
-        .right-panel {
-          width: 100%;
-          height: auto;
-          border: none;
-        }
-
-        .map-container {
-          order: -1;
-          padding: 10px 0;
-        }
-      }
     </style>
   </head>
   <body>
-    <header class="app-header">
-      <h1>Juvenile Justice Information Dashboard</h1>
-    </header>
-    <div class="top-bar" id="stats-bar">
-      Show: All Districts | Total Commits: — | Per 1k Youth: —
+    <div id="wrapper">
+      <div id="stats-bar">
+        Show: All Districts | Total Commits: — | Per 1k Youth: —
+      </div>
+      <div id="district-buttons"></div>
     </div>
-
-    <div class="main-layout">
-      <div class="left-panel">
-        <div id="district-buttons"></div>
-      </div>
-      <div class="map-container">
-        <div id="svg-container"></div>
-      </div>
-      <div class="right-panel">
-        <div class="info-box" id="info-box"></div>
-      </div>
-    </div>
+    <div id="svg-container"></div>
 
     <div class="tooltip" id="tooltip"></div>
+    <div class="info-box" id="info-box"></div>
 
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script type="module">
+      
       function updateStatsBar(district) {
         const statsBar = document.getElementById("stats-bar");
 
@@ -297,18 +187,6 @@
       }
 
       import { countyData } from "./data/countyData-13.js";
-
-      const uniqueDistricts = Array.from(
-        new Set(Object.values(countyData).map((d) => d.district))
-      ).sort((a, b) => {
-        const numA = parseInt(a);
-        const numB = parseInt(b);
-
-        if (!isNaN(numA) && !isNaN(numB)) {
-          return numA - numB;
-        }
-        return a.localeCompare(b);
-      });
 
       // 🔥 Now you can use countyData as usual
       console.log("Loaded counties:", Object.keys(countyData));
@@ -385,24 +263,39 @@
 
           console.log("✅ Map rendered with interactive county data");
 
-          const districtBtnContainer =
-            document.getElementById("district-buttons");
+          // Now that the SVG is in place, add the district buttons
+          const uniqueDistricts = Array.from(
+            new Set(Object.values(countyData).map((d) => d.district))
+          ).sort((a, b) => {
+            const numA = parseInt(a);
+            const numB = parseInt(b);
+
+            if (numA !== numB) return numA - numB;
+
+            const suffixA = a.replace(numA, "");
+            const suffixB = b.replace(numB, "");
+
+            return suffixA.localeCompare(suffixB);
+          });
 
           uniqueDistricts.forEach((district) => {
             const btn = document.createElement("button");
+            btn.classList.add("district-btn");
             btn.textContent = district;
             btn.addEventListener("click", () => highlightDistrict(district));
-            districtBtnContainer.appendChild(btn);
+            document.getElementById("district-buttons").appendChild(btn);
           });
 
+          // Add Show All button last
           const resetBtn = document.createElement("button");
-          resetBtn.textContent = "Reset";
+          resetBtn.textContent = "Show All";
+          resetBtn.classList.add("reset");
+
           resetBtn.addEventListener("click", () => {
             highlightDistrict(null);
             updateStatsBar(null);
-            location.reload();
+            location.reload()            
           });
-          districtBtnContainer.prepend(resetBtn);
 
           document.getElementById("district-buttons").prepend(resetBtn);
         });
