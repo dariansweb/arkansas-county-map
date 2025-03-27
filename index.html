@@ -36,6 +36,26 @@
         text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
       }
 
+      .app-footer {
+        border-top: 1px solid #ccc;
+        padding: 20px 15px;
+        text-align: center;
+        font-size: 13px;
+        color: #555;
+        margin-top: 40px;
+      }
+
+      .app-footer a {
+        color: #1e3c72;
+        text-decoration: none;
+        font-weight: 500;
+      }
+
+      .app-footer a:hover {
+        text-decoration: underline;
+        color: #2a5298;
+      }
+
       .district-btn {
         background-color: #e0e0e0;
         color: #333;
@@ -407,5 +427,33 @@
           document.getElementById("district-buttons").prepend(resetBtn);
         });
     </script>
+    <footer class="app-footer">
+      <p>
+        Built with ❤️ using open data from the
+        <a
+          href="https://gis.arkansas.gov/product/county-boundary-polygons/"
+          target="_blank"
+          rel="noopener"
+          >Arkansas GIS Office</a
+        >
+        and
+        <a
+          href="https://www.census.gov/data/tables/time-series/demo/popest/2020s-counties-detail.html"
+          target="_blank"
+          rel="noopener"
+          >U.S. Census Bureau</a
+        >.
+      </p>
+      <p>
+        View source on
+        <a
+          href="https://github.com/dariansweb/arkansas-county-map"
+          target="_blank"
+          rel="noopener"
+          >GitHub</a
+        >
+        — contributions welcome!
+      </p>
+    </footer>
   </body>
 </html>
