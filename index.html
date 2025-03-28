@@ -259,6 +259,23 @@
         }
       }
     </style>
+    <script>
+      const cacheBust = `?v=${Date.now()}`;
+
+      const script = document.createElement("script");
+      script.type = "module";
+      script.src = `./data/countyData-13.js${cacheBust}`;
+      document.body.appendChild(script);
+
+      // For SVG fetch
+      const originalFetch = window.fetch;
+      window.fetch = function (resource, init) {
+        if (typeof resource === "string" && resource.endsWith(".svg")) {
+          resource += cacheBust;
+        }
+        return originalFetch(resource, init);
+      };
+    </script>
   </head>
   <body>
     <header class="app-header">
