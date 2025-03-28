@@ -202,60 +202,62 @@
         flex-shrink: 0;
       }
 
-/* Responsive styles */
-@media (max-width: 768px) {
-    .main-layout {
-        flex-direction: column;
-        height: auto;
-        overflow: visible;
-    }
+      /* Responsive styles */
+      @media (max-width: 768px) {
+        .main-layout {
+          flex-direction: column;
+          height: auto;
+          overflow: visible;
+        }
 
-    .left-panel {
-        width: 100%;
-        height: auto;
-        border-right: none;
-        border-bottom: 1px solid #ccc;
-    }
+        .left-panel {
+          width: 100%;
+          height: auto;
+          border-right: none;
+          border-bottom: 1px solid #ccc;
+        }
 
-    .map-container {
-        height: 70vh;
-        width: 100%;
-        overflow: visible;
-    }
+        .map-container {
+          height: 70vh;
+          width: 100%;
+          overflow: visible;
+        }
 
-    /* Mobile SVG styles */
-    svg {
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-        display: block;
-        margin: 0 auto;
-        padding: 10px;
-        max-height: 65vh; /* Slightly less than container height */
-        transform-origin: center center;
-        transform: scale(0.95); /* Slightly scaled down to ensure visibility */
-    }
+        /* Mobile SVG styles */
+        svg {
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+          display: block;
+          margin: 0 auto;
+          padding: 10px;
+          max-height: 65vh; /* Slightly less than container height */
+          transform-origin: center center;
+          transform: scale(
+            0.95
+          ); /* Slightly scaled down to ensure visibility */
+        }
 
-    .right-panel {
-        width: 100%;
-        border-left: none;
-        border-top: 1px solid #ccc;
-    }
+        .right-panel {
+          width: 100%;
+          border-left: none;
+          border-top: 1px solid #ccc;
+        }
 
-    #district-buttons {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: center;
-        padding: 0;
-    }
+        #district-buttons {
+          display: flex;
+          flex-direction: row;
+          flex-wrap: wrap;
+          justify-content: center;
+          padding: 0;
+        }
 
-    #district-buttons button {
-        margin: 5px;
-        padding: 5px;
-        border: 1px orange solid;
-    }
-}
+        #district-buttons button {
+          margin: 5px;
+          padding: 5px;
+          border: 1px orange solid;
+        }
+      }
     </style>
   </head>
   <body>
@@ -341,7 +343,7 @@
         updateStatsBar(selectedDistrict);
       }
 
-      import { countyData } from "./data/countyData-13.js";
+      import { countyData } from "./data/countyData-13.js?v=3";
 
       const uniqueDistricts = Array.from(
         new Set(Object.values(countyData).map((d) => d.district))
