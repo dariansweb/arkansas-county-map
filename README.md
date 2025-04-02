@@ -8,26 +8,20 @@ This repository contains a simplified **GeoJSON** representation of all **75 cou
 > 👉 [Juvenile Justice Dashboard (Hosted on GitHub Pages)](https://dariansweb.github.io/arkansas-county-map)
 
 ---
+# 📜 The Codex of Functionality
 
-<!-- 💣 OPEN SOURCE WITH ATTITUDE 💣 -->
+> In the Year of the Debug, amidst the Trials of Modal Madness,  
+> A Dev of Singular Will forged this Artifact.  
 
-# 💻✨ Welcome to Functional Code ✨💻
+> It runs. It renders.  
+> It bows to no linter.
 
-### 👋 Hi, I’m a Developer Who Ships
+### ✨ You want elegance?  
+### Then fork it, **champ**. 😎
 
-> 🧠 It’s not perfect.  
-> 🧪 It’s not over-engineered.  
-> ✅ It works.  
->  
-> **You want it prettier? Fork it, champ.** 😎
-
----
-
-_This repo was crafted in the sacred forge of late nights and caffeine.  
-Use it, break it, improve it — or just marvel at its bold functionality._
+> _Thus spoke the Builder._
 
 ---
-
 ## 📦 File Contents
 
 - `COUNTY_BOUNDARY.json`  
