@@ -9,6 +9,25 @@ This repository contains a simplified **GeoJSON** representation of all **75 cou
 
 ---
 
+<!-- 💣 OPEN SOURCE WITH ATTITUDE 💣 -->
+
+# 💻✨ Welcome to Functional Code ✨💻
+
+### 👋 Hi, I’m a Developer Who Ships
+
+> 🧠 It’s not perfect.  
+> 🧪 It’s not over-engineered.  
+> ✅ It works.  
+>  
+> **You want it prettier? Fork it, champ.** 😎
+
+---
+
+_This repo was crafted in the sacred forge of late nights and caffeine.  
+Use it, break it, improve it — or just marvel at its bold functionality._
+
+---
+
 ## 📦 File Contents
 
 - `COUNTY_BOUNDARY.json`  
